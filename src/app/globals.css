@@ -1,7 +1,7 @@
 :root {
   --bg: #0d0c22;
   --bgSoft: #2d2b42;
-  --text: White;
+  --text: white;
   --textSoft: #e5e5e5;
   --btn: #3673fd;
 }
@@ -23,8 +23,7 @@ a {
 }
 
 .container {
-  /* background-color: rebeccapurple; */
-  width: 1164px;
+  width: 1536px;
   margin: auto;
   padding-left: 50px;
   padding-right: 50px;
@@ -34,7 +33,19 @@ a {
   justify-content: space-between;
 }
 
-@media (max-width: 1164px) {
+@media (max-width: 1536px) {
+  .container {
+    width: 1366px;
+  }
+}
+
+@media (max-width: 1366px) {
+  .container {
+    width: 1280px;
+  }
+}
+
+@media (max-width: 1280px) {
   .container {
     width: 1024px;
     padding-left: 20px;
@@ -45,21 +56,22 @@ a {
 @media (max-width: 1024px) {
   .container {
     width: 768px;
-    padding-left: 15px;
-    padding-right: 15px;
   }
+}
 
-  @media (max-width: 768px) {
-    .container {
-      width: 600px;
-      padding-left: 10px;
-      padding-right: 10px;
-    }
+@media (max-width: 768px) {
+  .container {
+    width: 640px;
   }
+}
 
-  @media (max-width: 600px) {
-    .container {
-      width: 450px;
-    }
+@media (max-width: 640px) {
+  .container {
+    width: 475px;
+  }
+}
+@media (max-width: 475px) {
+  .container {
+    width: 380px;
   }
 }
