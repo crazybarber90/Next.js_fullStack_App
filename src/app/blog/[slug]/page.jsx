@@ -2,7 +2,12 @@ import React from 'react'
 import styles from './singlePost.module.css'
 import Image from 'next/image'
 
-const SinglePostPage = () => {
+// IN SERVER COMPONENT WE CAN ACCESS OUR PATHNAME OR QUERRY ONLY IF WE DESTRUCTURE IN FUNCTION
+//http://localhost:3000/blog/post?q=test
+
+const SinglePostPage = ({ params, searchParams }) => {
+  // console.log('PARAMS IZ SLUG', params) // => blog
+  // console.log('QUERY IZ SLUG', searchParams)  // => test
   return (
     <div className={styles.container}>
       <div className={styles.imgContainer}>

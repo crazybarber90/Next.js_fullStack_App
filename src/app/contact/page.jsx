@@ -14,8 +14,8 @@ import styles from './contact.module.css'
 
 //this is the most common error that can occur in the next project regarding hydration, because one value of the variable appears on the server, because the function is certainly triggered first on the server
 
-const a = Math.random()
-console.log('a random numberas ', a)
+// const a = Math.random()
+// console.log('a random numberas ', a)
 // ON CLIENT a random numberas  0.07542550531041625
 // ON SERVER a random numberas  0.7126854815407451
 
