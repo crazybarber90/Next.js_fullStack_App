@@ -1,5 +1,6 @@
 import Image from 'next/image'
 import styles from './about.module.css'
+import { getPost } from '@/lib/data'
 
 export const metadata = {
   title: 'About Page',

@@ -1,4 +1,3 @@
-'use client'
 import Image from 'next/image'
 import styles from './contact.module.css'
 
@@ -22,6 +21,12 @@ import styles from './contact.module.css'
 // regardless of whether the component is client-side, and then only on the client-side and various values ​​of the same variable lead to a conflict
 
 //====================================================== HYDRATION
+
+export const metadata = {
+  title: 'Contact page',
+  description: 'Contact desc',
+}
+
 const ContactPage = () => {
   return (
     <div className={styles.container}>
