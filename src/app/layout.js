@@ -6,6 +6,9 @@ import './globals.css'
 const inter = Inter({ subsets: ['latin'] })
 
 // DEFAULT METADATA WHEN IS NOT SETED EXPLICITLY IS default, and wen i seted, will be with template prefix Next.js 14 | (rest of page)
+
+// SERVER ACTIONSSSSSSSSSSSSSSSSSSSSSS 3:05:50
+
 export const metadata = {
   title: {
     default: 'Next.js 14 default title',
