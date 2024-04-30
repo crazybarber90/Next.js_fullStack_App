@@ -3,6 +3,7 @@
 
 import { revalidatePath } from 'next/cache'
 import { Post } from './models'
+import { signIn, signOut } from './auth'
 
 const { connectToDb } = require('./utils')
 
@@ -45,4 +46,14 @@ export const deletePost = async (formData) => {
     console.log(error)
     return { error: 'something went wrong with adding post' }
   }
+}
+
+export const handleGithubLogin = async () => {
+  'use server'
+  await signIn('github')
+}
+
+export const handleLogout = async () => {
+  'use server'
+  await signOut()
 }
