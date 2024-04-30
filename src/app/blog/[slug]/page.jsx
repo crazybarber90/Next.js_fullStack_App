@@ -30,6 +30,18 @@ export const generateMetadata = async ({ params }) => {
 //   return res.json()
 // }
 
+const getData = async (slug) => {
+  const res = await fetch(
+    `http://localhost:3000/api/blog/${slug}` // using desctructured params we can access to slug
+  )
+  if (!res.ok) {
+    throw new Error('something went wrong')
+  }
+
+  // console.log('resss', res)
+  return res.json()
+}
+
 // IN SERVER COMPONENT WE CAN ACCESS OUR PATHNAME OR QUERRY ONLY IF WE DESTRUCTURE IN FUNCTION
 //http://localhost:3000/blog/post?q=test
 
@@ -39,9 +51,9 @@ const SinglePostPage = async ({ params, searchParams }) => {
 
   const { slug } = params
   //MONG-DB fetch
-  const post = await getPost(slug)
+  // const post = await getPost(slug)
   //API jsonplaceholder fetch
-  // const post = await getData(slug)
+  const post = await getData(slug)
 
   // const formattedCreatedAt = new Date(post.createdAt).toLocaleString()
   return (

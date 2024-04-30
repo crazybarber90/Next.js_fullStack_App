@@ -19,10 +19,24 @@ import { getPosts } from '@/lib/data'
 //   return res.json()
 // }
 
-const BlogPage = async () => {
-  // const posts = await getData()
+const getData = async () => {
+  const res = await fetch(
+    'http://localhost:3000/api/blog',
+    { cache: 'no-store' }
+    // { next: { revalidate: 30000 } } =>>>> refresh data every 30sec
+  )
 
-  const posts = await getPosts()
+  if (!res.ok) {
+    throw new Error('something went wrong')
+  }
+
+  return res.json()
+}
+
+const BlogPage = async () => {
+  const posts = await getData()
+
+  // const posts = await getPosts()
 
   // console.log('POST IZ BLOGA', posts)
 
