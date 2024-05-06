@@ -59,12 +59,12 @@ export const handleLogout = async () => {
   await signOut()
 }
 
-export const register = async (formData) => {
+export const register = async (previousState, formData) => {
   const { username, email, password, img, passwordRepeat } =
     Object.fromEntries(formData)
 
   if (password !== passwordRepeat) {
-    return 'Passwords does not match'
+    return { error: 'Passwords does not match' }
   }
 
   try {
@@ -75,7 +75,7 @@ export const register = async (formData) => {
     console.log('USER', user)
 
     if (user) {
-      return 'User allready exist'
+      return { error: 'User allready exist' }
     }
 
     // HASH PASSWORD BEFORE REGISTER USER WITH BCRYPT LIBRARY
@@ -90,13 +90,14 @@ export const register = async (formData) => {
     })
     await newUser.save()
     console.log('New user shas been created')
+    return { success: true }
   } catch (error) {
     console.log(error)
     return { error: 'something went wrong with creating new user' }
   }
 }
 
-export const login = async (formData) => {
+export const login = async (previousState, formData) => {
   console.log('LOGIN TRIGER')
   const { username, password } = Object.fromEntries(formData)
 
@@ -105,6 +106,13 @@ export const login = async (formData) => {
     console.log('LOGIN ACTION TRIGGERED')
   } catch (error) {
     console.log(error)
-    return { error: 'something went wrong with logining user' }
+    if (error.message.includes('CredentialsSignin')) {
+      return { error: 'Invalid username or password' }
+      // EVEN IF WE ENTER CORRECT USERNAME AND PASS, we will get Error: NEXT_REDIRECT
+      // so we will not return error
+      // https://nextjs.org/docs/app/api-reference/functions/redirect#example
+    }
+    // return { error: 'something went wrong with logining user' }
+    throw error
   }
 }

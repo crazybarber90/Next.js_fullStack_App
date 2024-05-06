@@ -1,11 +1,11 @@
 import NextAuth from 'next-auth'
 import GitHub from 'next-auth/providers/github'
+import CredentialsProvider from 'next-auth/providers/credentials'
 import { connectToDb } from './utils'
 import { User } from './models'
-import CredentialsProvider from 'next-auth/providers/credentials'
 import bcrypt from 'bcryptjs'
+import { authConfig } from './auth.config'
 
-// LOGIN FUNCTION AND COMPARING BCRYPT PASSWORD
 const login = async (credentials) => {
   try {
     connectToDb()
@@ -33,6 +33,7 @@ export const {
   signIn,
   signOut,
 } = NextAuth({
+  ...authConfig,
   providers: [
     GitHub({
       clientId: process.env.GITHUB_ID,
@@ -40,14 +41,10 @@ export const {
     }),
     CredentialsProvider({
       async authorize(credentials) {
-        console.log('triggered authorized')
         try {
-          console.log('triggered try authorized ')
-
           const user = await login(credentials)
           return user
         } catch (err) {
-          console.log('catch authorize')
           return null
         }
       },
@@ -55,7 +52,6 @@ export const {
   ],
   callbacks: {
     async signIn({ user, account, profile }) {
-      console.log(user, account, profile)
       if (account.provider === 'github') {
         connectToDb()
         try {
@@ -65,18 +61,18 @@ export const {
             const newUser = new User({
               username: profile.login,
               email: profile.email,
-              img: profile.avatar_url,
+              image: profile.avatar_url,
             })
+
             await newUser.save()
-            console.log('CREATED USER ')
           }
-        } catch (error) {
-          console.log('ERROR IZ AUTHA', error)
+        } catch (err) {
+          console.log(err)
           return false
         }
       }
-      console.log('USER ALLREADY EXIST!!!')
       return true
     },
+    ...authConfig.callbacks,
   },
 })
