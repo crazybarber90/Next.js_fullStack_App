@@ -8,7 +8,7 @@ import bcrypt from 'bcryptjs'
 
 const { connectToDb } = require('./utils')
 
-export const addPost = async (formData) => {
+export const addPost = async (prevState, formData) => {
   //   'use server'
   const { title, desc, slug, userId } = Object.fromEntries(formData)
 
@@ -24,6 +24,7 @@ export const addPost = async (formData) => {
     })
     // in development mode, it will automaticly refresh data but in production, will not revalidate data so we must refresh data after creating new post
     revalidatePath('/blog')
+    revalidatePath('/admin')
     //=--------------------------------
     await newPost.save()
     console.log('New post saved to db')
@@ -43,9 +44,50 @@ export const deletePost = async (formData) => {
 
     console.log('Deleted post from db')
     revalidatePath('/blog')
+    revalidatePath('/admin')
   } catch (error) {
     console.log(error)
-    return { error: 'something went wrong with adding post' }
+    return { error: 'something went wrong with deleting post' }
+  }
+}
+
+export const addUser = async (prevState, formData) => {
+  //   'use server'
+  const { username, email, password, img } = Object.fromEntries(formData)
+
+  try {
+    connectToDb()
+    const newUser = new User({
+      username: username,
+      email: email,
+      password: password,
+      img: img,
+    })
+    // in development mode, it will automaticly refresh data but in production, will not revalidate data so we must refresh data after creating new post
+    revalidatePath('/admin')
+    //=--------------------------------
+    await newPost.save()
+    console.log('New user saved to db')
+  } catch (error) {
+    console.log(error)
+    return { error: 'something went wrong with adding new user' }
+  }
+}
+
+export const deleteUser = async (formData) => {
+  //   'use server'
+  const { id } = Object.fromEntries(formData)
+  try {
+    connectToDb()
+    // console.log('id od posta', id)
+    await Post.deleteMany({ userId: id }) // also deleting all posts from user which will be deleted
+    await User.findByIdAndDelete(id)
+
+    console.log('Deleted user from db')
+    revalidatePath('/admin')
+  } catch (error) {
+    console.log(error)
+    return { error: 'something went wrong with deleting user' }
   }
 }
 

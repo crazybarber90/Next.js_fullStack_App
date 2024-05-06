@@ -6,6 +6,10 @@ const nextConfig = {
         protocol: 'https',
         hostname: 'images.pexels.com',
       },
+      {
+        protocol: 'https',
+        hostname: 'avatars.githubusercontent.com',
+      },
       // ADD DOMAINS FROM WHERE YOU WANNA IMPORT IMAGE
     ],
   },
